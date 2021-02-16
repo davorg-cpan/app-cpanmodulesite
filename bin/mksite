@@ -1,0 +1,12 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use App::CPANModuleSite;
+
+@ARGV or die "Usage: $0 <distribution_name>\n";
+
+my $app = App::CPANModuleSite->new($ARGV[0]);
+
+$app->run;

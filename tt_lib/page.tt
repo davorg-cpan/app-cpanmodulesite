@@ -1,0 +1,5 @@
+Here's a header
+
+[% content -%]
+
+And here's a footer

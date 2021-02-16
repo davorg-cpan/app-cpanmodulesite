@@ -1,0 +1,6 @@
+Distribution name: [% distribution.name %]
+Current release: [% release.name %]
+
+[% FOR m IN modules -%]
+* [% m.module.0.name %]
+[% END -%]
