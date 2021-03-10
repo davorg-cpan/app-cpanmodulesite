@@ -1,5 +1,7 @@
 package App::CPANModuleSite;
 
+use 5.14;
+
 use MetaCPAN::Client;
 use Template;
 use Path::Iterator::Rule;
