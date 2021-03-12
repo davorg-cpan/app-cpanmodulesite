@@ -1,16 +1,27 @@
 package App::CPANModuleSite;
 
-use 5.14;
+use v5.14;
 
 use MetaCPAN::Client;
 use Template;
 use Path::Iterator::Rule;
 use Moose;
+use Moose::Util::TypeConstraints;
+
+subtype 'App::CPANModuleSite::Str',
+  as 'Str';
+
+coerce 'MetaCPAN::Client::Distribution',
+  from 'App::CPANModuleSite::Str',
+  via {
+    MetaCPAN::Client->new->distribution($_);
+  };
 
 has distribution => (
   is => 'ro',
-  isa => 'Str',
+  isa => 'MetaCPAN::Client::Distribution',
   required => 1,
+  coerce => 1,
 );
 
 has metacpan => (
@@ -21,6 +32,30 @@ has metacpan => (
 
 sub _build_metacpan {
   return MetaCPAN::Client->new;
+}
+
+has release => (
+  is => 'ro',
+  isa => 'MetaCPAN::Client::Release',
+  lazy_build => 1,
+);
+
+sub _build_release {
+  my $self = shift;
+
+  return $self->metacpan->release($self->distribution->name);
+}
+
+has modules => (
+  is => 'ro',
+  isa => 'ArrayRef[MetaCPAN::Client::Module]',
+  lazy_build => 1,
+);
+
+sub _build_modules {
+  my $self = shift;
+
+  return [ map { $self->metacpan->module($_) } @{ $self->release->provides } ];
 }
 
 has tt => (
@@ -44,19 +79,15 @@ has tt_config => (
 sub _build_tt_config {
   my $self = shift;
 
-  my $release = $self->metacpan->release($self->distribution);
-  my $distribution = $self->metacpan->distribution($self->distribution);
-  my @modules = map { $self->metacpan->module($_) } @{ $release->provides };
-
   return {
-    INCLUDE_PATH => $self->include_path,,
-    OUTPUT_PATH => $self->output_path,,
-    ( $self->wrapper ? ( WRAPPER => 'page.tt' ) : () ),
+    INCLUDE_PATH => $self->include_path,
+    OUTPUT_PATH => $self->output_path,
+    ( $self->wrapper ? ( WRAPPER => $self->wrapper ) : () ),
     RELATIVE => 1,
     VARIABLES => {
-      distribution => $distribution,
-      release => $release,
-      modules => \@modules,
+      distribution => $self->distribution,
+      release => $self->release,
+      modules => $self->modules,
     },
   }
 }
@@ -125,6 +156,12 @@ sub run {
     } else {
       $self->copy_file($_);
     }
+  }
+
+  foreach (@{ $self->modules }) {
+    my $outpath = $_->path =~ s/\.pm$/.html/r;
+    my $pod = $_->pod('html');
+    $self->tt->process(\$pod, undef, $outpath);
   }
 }
 

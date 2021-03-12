@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use 5.14;
+use v5.14;
 
 use App::CPANModuleSite;
 
