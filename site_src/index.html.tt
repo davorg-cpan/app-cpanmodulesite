@@ -1,4 +1,4 @@
-<p>Distribution name: [% distribution.name %]</p>
+<h1>Distribution name: [% distribution.name %]</h1>
 <p>Current release: [% release.name %]</p>
 
 <ul>
