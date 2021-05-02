@@ -3,6 +3,6 @@
 
 <ul>
 [% FOR m IN modules -%]
-<li>[% m.module.0.name %]</li>
+<li><a href="/lib/[% m.module.0.name.replace('::', '/') %].html">[% m.module.0.name %]</a></li>
 [% END -%]
 </ul>
