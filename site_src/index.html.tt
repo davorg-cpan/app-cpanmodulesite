@@ -1,8 +1,2 @@
 <h1>Distribution name: [% distribution.name %]</h1>
-<p>Current release: [% release.name %]</p>
-
-<ul>
-[% FOR m IN modules -%]
-<li><a href="/lib/[% m.module.0.name.replace('::', '/') %].html">[% m.module.0.name %]</a></li>
-[% END -%]
-</ul>
+<p>Current release: <a href="https://metacpan.org/release/[% distribution.name %]">[% release.name %]</a></p>
