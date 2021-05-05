@@ -1,2 +1,5 @@
-<h1>Distribution name: [% distribution.name %]</h1>
-<p>Current release: <a href="https://metacpan.org/release/[% distribution.name %]">[% release.name %]</a></p>
+<h1>[% distribution.name %]</h1>
+<p>[% release.abstract %]</p>
+<p>Current version: [% release.version %]</p>
+
+[% INCLUDE intro.tt %]
