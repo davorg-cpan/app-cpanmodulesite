@@ -1,4 +1,12 @@
+=head1 NAME
+
+App::CPANModuleSite - Automatically create a web site for a CPAN module.
+
+=cut
+
 package App::CPANModuleSite;
+
+our $VERSION = '0.0.1';
 
 use v5.14;
 
@@ -7,6 +15,7 @@ use Template;
 use Path::Iterator::Rule;
 use Moose;
 use Moose::Util::TypeConstraints;
+use File::ShareDir 'dist_dir';
 
 subtype 'App::CPANModuleSite::Str',
   as 'Str';
@@ -92,14 +101,26 @@ sub _build_tt_config {
   }
 }
 
-has site_src => (
+has [ qw[site_src local_site_src tt_lib local_tt_lib] ] => (
   is => 'ro',
   isa => 'Str',
   lazy_build => 1,
 );
 
 sub _build_site_src {
+  return dist_dir('App-CPANModuleSite') . '/site_src';
+}
+
+sub _build_local_site_src {
   return './site_src';
+}
+
+sub _build_tt_lib {
+  return dist_dir('App-CPANModuleSite') . '/tt_lib';
+}
+
+sub _build_local_tt_lib {
+  return './tt_lib';
 }
 
 has include_path => (
@@ -111,7 +132,12 @@ has include_path => (
 sub _build_include_path {
   my $self = shift;
 
-  return [ $self->site_src, './tt_lib' ];
+  return [
+    $self->local_tt_lib,
+    $self->local_site_src,
+    $self->tt_lib,
+    $self->site_src,
+  ];
 }
 
 has output_path => (
@@ -150,7 +176,11 @@ sub run {
 
   my $finder = Path::Iterator::Rule->new->file;
 
-  for ( $finder->all($self->site_src, { relative => 1 }) ) {
+  my @src_dirs = ($self->local_site_src, $self->site_src);
+  my %src_files = map { $_ => 1 }
+    $finder->all($self->site_src, { relative => 1 });
+
+  for ( keys %src_files ) {
     if (/\.tt$/) {
       $self->process_template($_);
     } else {
