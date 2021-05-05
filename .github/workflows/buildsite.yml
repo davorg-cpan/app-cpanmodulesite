@@ -23,6 +23,8 @@ jobs:
           sudo cpanm --installdeps --notest .
           sudo cpanm --notest File::ShareDir::Install
           sudo cpanm --notest App::CPANModuleSite
+          sudo cp -r /root/.cpanm/work/*/build.log build.log
+          sudo chmod -R 666 build.log
     - name: Create pages
       run: |
         mkdir -p docs
@@ -36,11 +38,6 @@ jobs:
         git add docs/
         if [ "$GIT_STATUS" != "" ]; then git commit -m "Web site generation"; fi
         if [ "$GIT_STATUS" != "" ]; then git push; fi
-    - name: Copy cpanm log
-      if: ${{ failure() }}
-      run: |
-        sudo cp -r /root/.cpanm/work/*/build.log build.log
-        sudo chmod -R 666 build.log
     - name: Archive CPAN logs
       if: ${{ failure() }}
       uses: actions/upload-artifact@v2
