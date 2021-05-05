@@ -1,0 +1,34 @@
+name: Generate web site
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install cpanm
+      run: |
+          sudo apt-get update -y
+          sudo apt-get install -y cpanminus
+    - name: Install modules
+      run: |
+          sudo cpanm --installdeps --notest .
+          sudo cpanm --notest App::CPANModuleSite
+    - name: Create pages
+      run: |
+        mkdir -p docs
+        mksite
+    - name: Commit new page
+      run: |
+        GIT_STATUS=$(git status --porcelain)
+        echo $GIT_STATUS
+        git config --global user.name 'Dave Cross'
+        git config --global user.email 'dave@perlschool.com'
+        git add docs/
+        if [ "$GIT_STATUS" != "" ]; then git commit -m "Web site generation"; fi
+        if [ "$GIT_STATUS" != "" ]; then git push; fi
