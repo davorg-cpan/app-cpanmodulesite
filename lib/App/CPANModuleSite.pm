@@ -2,6 +2,13 @@
 
 App::CPANModuleSite - Automatically create a web site for a CPAN module.
 
+=head1 SYNOPSIS
+
+    # From a command line
+    $ mksite My::Lovely::Module
+
+It's probably not particularly useful to use the class directly.
+
 =cut
 
 package App::CPANModuleSite;
@@ -13,6 +20,7 @@ use v5.14;
 use MetaCPAN::Client;
 use Template;
 use Path::Iterator::Rule;
+use File::Copy;
 use Moose;
 use Moose::Util::TypeConstraints;
 use File::ShareDir 'dist_dir';
@@ -171,6 +179,26 @@ around BUILDARGS => sub {
   }
 };
 
+=head1 METHODS
+
+=head2 run
+
+The main driver method for the class. Does the following steps:
+
+=over 4
+
+=item * Creates a list of input files
+
+=item * Uses Template Toolkit to process the templates
+
+=item * Copies any non-template files into the output tree
+
+=item * Creates a HTML version of the Pod from all the modules
+
+=back
+
+=cut
+
 sub run {
   my $self = shift;
 
@@ -205,4 +233,28 @@ sub process_template {
     or die $self->tt->error;
 }
 
+sub copy_file {
+  my $self = shift;
+  my ($file) = @_;
+
+  copy($file, $self->output_path . "/$file");
+}
+
 1;
+
+=head1 AUTHOR
+
+Dave Cross <dave@perlhacks.com>
+
+=head1 SEE ALSO
+
+L<mksite>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2021, Magnum Solutions Ltd.  All Rights Reserved.
+
+This script is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=cut
