@@ -32,10 +32,16 @@ jobs:
         git add docs/
         if [ "$GIT_STATUS" != "" ]; then git commit -m "Web site generation"; fi
         if [ "$GIT_STATUS" != "" ]; then git push; fi
+    - name: Copy cpanm logs
+      if: ${{ failure() }}
+      run: |
+        mkdir -p .cpanm/work
+        sudo cp -r /root/.cpanm/work .cpanm/work
+        sudo chmod -R a+r .cpanm
     - name: Archive CPAN logs
       if: ${{ failure() }}
       uses: actions/upload-artifact@v2
       with:
         name: cpan_log
-        path: /root/.cpanm/work/*/build.log
+        path: .cpanm/work/*/build.log
         retention-days: 2
