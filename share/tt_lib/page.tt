@@ -70,6 +70,8 @@
       <div class="col-3">
         <h2>Documentation</h2>
 [% doc_links %]
+        <h2>Other links</h2>
+[% other_links %]
       </div>
       <div class="col-9">
 [% content %]
