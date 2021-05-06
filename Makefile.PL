@@ -9,7 +9,7 @@ WriteMakefile(
     MIN_PERL_VERSION  => '5.14.0',
     PREREQ_PM         => {
         Moose                        => 0,
-	MetaCPAN::Client             => 0,
+	MetaCPAN::Client             => 2.0,
 	Template	             => 0,
 	Path::Iterator::Rule         => 0,
 	Moose::Util::TypeConstraints => 0,

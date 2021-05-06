@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4] - 2021-05-06
+### Changed
+- We need MetaCPAN::Client v2
+
 ## [0.0.3] - 2021-05-05
 ### Changed
 - Tweaked the default page template
