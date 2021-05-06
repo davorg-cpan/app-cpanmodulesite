@@ -21,7 +21,6 @@ jobs:
     - name: Install modules
       run: |
           sudo cpanm --installdeps --notest .
-          sudo cpanm --notest File::ShareDir::Install
           sudo cpanm --notest App::CPANModuleSite
           sudo cp -r /root/.cpanm/work/*/build.log build.log
           sudo chmod -R 666 build.log
