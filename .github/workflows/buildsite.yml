@@ -26,7 +26,7 @@ jobs:
     - name: Create pages
       run: |
         mkdir -p docs
-        mksite
+        /usr/bin/mksite
     - name: Commit new page
       run: |
         GIT_STATUS=$(git status --porcelain)
