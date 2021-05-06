@@ -7,6 +7,7 @@ WriteMakefile(
     NAME              => 'App::CPANModuleSite',
     VERSION_FROM      => 'lib/App/CPANModuleSite.pm',
     MIN_PERL_VERSION  => '5.14.0',
+    EXE_FILES         => [ 'bin/mksite' ],
     PREREQ_PM         => {
         Moose                        => 0,
 	MetaCPAN::Client             => 2.0,
