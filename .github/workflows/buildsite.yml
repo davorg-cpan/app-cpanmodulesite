@@ -23,8 +23,6 @@ jobs:
           sudo cpanm --notest File::ShareDir::Install
           sudo cpanm --installdeps --notest .
           sudo cpanm --notest App::CPANModuleSite
-          sudo cp -r /root/.cpanm/work/*/build.log build.log
-          sudo chmod -R 666 build.log
     - name: Create pages
       run: |
         mkdir -p docs
@@ -43,5 +41,5 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: cpan_log
-        path: build.log
+        path: .cpanm/work/*/build.log
         retention-days: 2
