@@ -13,7 +13,7 @@ It's probably not particularly useful to use the class directly.
 
 package App::CPANModuleSite;
 
-our $VERSION = '0.0.4';
+our $VERSION = '0.0.5';
 
 use v5.14;
 

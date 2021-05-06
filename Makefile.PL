@@ -17,6 +17,8 @@ WriteMakefile(
     },
     BUILD_REQUIRES    => {
         Test::More              => 0,
+    },
+    CONFIGURE_REQUIRES => {
         File::ShareDir::Install => 0,
     },
     ABSTRACT_FROM     => 'lib/App/CPANModuleSite.pm',

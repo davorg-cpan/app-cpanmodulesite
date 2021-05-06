@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.5] - 2021-05-06
+### Changed
+- Make File::ShareDir::Install a CONFIGURE_REQUIRES
+
 ## [0.0.4] - 2021-05-06
 ### Changed
 - We need MetaCPAN::Client v2
