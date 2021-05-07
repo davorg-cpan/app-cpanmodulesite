@@ -26,7 +26,7 @@ jobs:
     - name: Create pages
       run: |
         echo Building site...
-        /usr/local/bin/mksite App-CPANModuleSite
+        /usr/local/bin/mksite App-CPANModuleSite /app-cpanmodulesite
     - name: Commit new page
       run: |
         GIT_STATUS=$(git status --porcelain)
