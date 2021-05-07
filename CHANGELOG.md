@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.7] - 2021-05-07
+### Added
+- Support a <base> element
+
 ## [0.0.6] - 2021-05-06
 ### Changed
 - Mark `mksite` as an executable file
