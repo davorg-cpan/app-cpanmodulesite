@@ -12,6 +12,7 @@ use App::CPANModuleSite;
 my $args = { distribution => $ARGV[0] };
 if (@ARGV > 1) {
   $args->{base} = $ARGV[1];
+  $args->{base} .= '/' if $args->{base} !~ m|/$|;
 }
 
 my $app = App::CPANModuleSite->new($args);
