@@ -14,10 +14,6 @@ matrix:
     dist: trusty
   - perl: "5.14"
     dist: trusty
-  - perl: "5.12"
-    dist: trusty
-  - perl: "5.10"
-    dist: trusty
 
 before_install:
   cpanm -n Devel::Cover::Report::Coveralls Module::Build
