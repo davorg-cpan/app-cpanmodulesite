@@ -22,4 +22,4 @@ matrix:
 before_install:
   cpanm -n Devel::Cover::Report::Coveralls Module::Build
 script:
-  perl Build.PL && ./Build build && cover -test -report coveralls
+  perl Makefile.PL && make && make test && cover -test -report coveralls
