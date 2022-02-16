@@ -27,7 +27,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
       - run: perl -V
-      - run: cpamn File::ShareDir::Install
+      - run: cpanm File::ShareDir::Install
       - run: cpanm --installdeps .
       - run: prove -lv t
       - name: Archive CPAN logs
