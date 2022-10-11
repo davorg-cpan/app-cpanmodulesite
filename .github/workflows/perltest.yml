@@ -30,8 +30,14 @@ jobs:
       - run: cpanm File::ShareDir::Install
       - run: cpanm --installdeps .
       - run: prove -lv t
-      - name: Archive CPAN logs
-        if: ${{ failure() }}
+      - name: Archive CPAN logs on Windows
+        if: ${{ failure() }} && runner.os == 'Windows'
+        uses: actions/upload-artifact@v3
+        with:
+          name: cpan_log
+          path: $env:HOME\.cpanm\work\*\build.log
+      - name: Archive CPAN logs on non-Windows
+        if: ${{ failure() }} && runner.os != 'Windows'
         uses: actions/upload-artifact@v3
         with:
           name: cpan_log
