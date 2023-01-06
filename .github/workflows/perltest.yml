@@ -27,8 +27,8 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
       - run: perl -V
-      - run: cpanm File::ShareDir::Install
-      - run: cpanm --installdeps .
+      - run: cpanm --notest File::ShareDir::Install
+      - run: cpanm --notest --installdeps .
       - run: prove -lv t
       - name: Archive CPAN logs on Windows
         if: ${{ failure() }} && runner.os == 'Windows'
