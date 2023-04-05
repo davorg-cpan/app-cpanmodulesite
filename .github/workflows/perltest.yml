@@ -42,3 +42,18 @@ jobs:
         with:
           name: cpan_log
           path: $HOME/.cpanm/work/*/build.log
+
+  coverage:
+    runs-on: ubuntu-latest
+    container: davorg/perl-coveralls:latest
+    name: Test coverage
+    steps:
+      - uses: actions/checkout@v3
+      - run: cpanm --notest File::ShareDir::Install
+      - run: cpanm --notest --installdeps .
+      - name: Install modules
+        run: cpanm -n --installdeps .
+      - name: Coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: cover -test -report Coveralls
