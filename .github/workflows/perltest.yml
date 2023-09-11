@@ -21,7 +21,7 @@ jobs:
         perl: [ 'latest' ]
     name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up perl
         uses: shogo82148/actions-setup-perl@v1
         with:
@@ -48,7 +48,7 @@ jobs:
     container: davorg/perl-coveralls:latest
     name: Test coverage
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - run: cpanm --notest File::ShareDir::Install
       - run: cpanm --notest --installdeps .
       - name: Install modules
